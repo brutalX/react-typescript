@@ -1,5 +1,6 @@
-import { Actions } from './types';
 import { ActionType } from './actions';
+import { Actions } from './types';
+
 import { Reducer } from 'redux';
 
 interface State {

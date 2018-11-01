@@ -1,5 +1,5 @@
-import * as Types from './types';
 import { ActionCreator } from 'redux';
+import * as Types from './types';
 
 const closeNavigation: ActionCreator<Types.MenuClosed> = () => ({
 	payload: {

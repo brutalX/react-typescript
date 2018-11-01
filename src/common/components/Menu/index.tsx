@@ -1,4 +1,8 @@
+import { connect } from 'react-redux';
+import { NavOperations } from 'common/ducks/navigation';
+
 import * as React from 'react';
+
 import styled from 'styled-components';
 
 interface NavProps {
@@ -15,28 +19,43 @@ const Nav =
 	position: fixed;
 	width: 200px;
 	height: 100%;
-	backgroundColor: #cecece;
+	background-color: #cecece;
 	padding: 20px 0px;
 	text-align: center;
-	opacity: ${(props) => (props.open ? 1 : 0)};
+	opacity: ${(props) => (props.open ? 1 : 0.5)};
 `;
 
 interface Props {
-	children: JSX.Element[];
+	children?: JSX.Element[];
+	open: boolean;
+	closeNavigation: () => void;
+	openNavigation: () => void;
 }
-
 interface State {
 	open: boolean;
 }
-
 class AndyMenu extends React.Component<Props, State> {
-	render() {
-		const { children } = this.props;
-		const { open } = this.state;
+	public render() {
+		const { children, open } = this.props;
+
 		return (
-			<Nav open={open}>{children}</Nav>;
-		)
+			<div>
+				{open ? <h1>true</h1> : <h1>false</h1>}
+				<Nav open={open} onClick={this.props.closeNavigation}>
+					{children}
+				</Nav>
+			</div>
+		);
 	}
 }
 
-export default AndyMenu;
+const mapStateToProps = (state: any) => ({
+	open: state.open
+});
+
+const matchDispatchToProps = {
+	closeNavigation: NavOperations.closeNavigation,
+	openNavigation: NavOperations.openNavigation
+};
+
+export default connect(mapStateToProps, matchDispatchToProps)(AndyMenu);
